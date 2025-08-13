@@ -4,6 +4,7 @@ using ArcGIS.Core.Geometry;
 using ArcGIS.Desktop.Catalog;
 using ArcGIS.Desktop.Core;
 using ArcGIS.Desktop.Editing;
+using ArcGIS.Desktop.Editing.Attributes;
 using ArcGIS.Desktop.Extensions;
 using ArcGIS.Desktop.Framework;
 using ArcGIS.Desktop.Framework.Contracts;
@@ -24,8 +25,7 @@ namespace TestAddIn
   {
     protected override void OnClick()
     {
-      // Find the layer called "Test Layer" in the current map and move all selected features to the 2D coordinate 45.0, 30.0
-      
+      // Move all selected feature in the 'TestPoint' feature layer by an offset of (10.0, 20.0)
     }
   }
 }
