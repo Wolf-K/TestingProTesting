@@ -1,31 +1,35 @@
-﻿using ArcGIS.Core.CIM;
-using ArcGIS.Core.Data;
-using ArcGIS.Core.Geometry;
-using ArcGIS.Desktop.Catalog;
+﻿using ArcGIS.Desktop.Catalog;
 using ArcGIS.Desktop.Core;
-using ArcGIS.Desktop.Editing;
-using ArcGIS.Desktop.Editing.Attributes;
-using ArcGIS.Desktop.Extensions;
-using ArcGIS.Desktop.Framework;
 using ArcGIS.Desktop.Framework.Contracts;
-using ArcGIS.Desktop.Framework.Dialogs;
 using ArcGIS.Desktop.Framework.Threading.Tasks;
-using ArcGIS.Desktop.KnowledgeGraph;
-using ArcGIS.Desktop.Layouts;
-using ArcGIS.Desktop.Mapping;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TestAddIn
 {
   internal class TestButton : Button
   {
-    protected override void OnClick()
+    protected override async void OnClick()
     {
-      // Move all selected feature in the 'TestPoint' feature layer by an offset of (10.0, 20.0)
+      // Create and configure the OpenItemDialog to select a folder
+      var openItemDialog = new OpenItemDialog
+      {
+        Title = "Select a folder to add to the project",
+        MultiSelect = false,
+        Filter = ItemFilters.Folders // Only allow folder selection
+      };
+
+      // Show the dialog and get the selected item
+      var ok = openItemDialog.ShowDialog();
+      if (!ok.Value || openItemDialog.Items.Count == 0)
+        return; // Exit if no folder is selected
+
+      var selectedFolder = openItemDialog.Items[0].Path;
+
+      // Add the selected folder as a connection to the current ArcGIS Pro project
+      await QueuedTask.Run(() =>
+      {
+        var folderConnection = ItemFactory.Instance.Create(selectedFolder, ItemFactory.ItemType.PathItem);
+        Project.Current.AddItem((IProjectItem)folderConnection);
+      });
     }
   }
 }

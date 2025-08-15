@@ -24,11 +24,15 @@
         <group id="TestAddIn_Group1" caption="Group 1" appearsOnAddInTab="true">
           <!-- host controls within groups -->
           <button refID="TestAddIn_TestButton" size="large" />
+          <button refID="TestAddIn_TestButton2" size="large" />
         </group>
       </groups>
       <controls>
         <!-- add your controls here -->
         <button id="TestAddIn_TestButton" caption="TestButton" className="TestButton" loadOnClick="true" smallImage="GenericButtonBlue16" largeImage="GenericButtonBlue32">
+          <tooltip heading="Tooltip Heading">Tooltip text<disabledText /></tooltip>
+        </button>
+        <button id="TestAddIn_TestButton2" caption="TestButton 2" className="TestButton2" loadOnClick="true" smallImage="GenericButtonBlue16" largeImage="GenericButtonBlue32">
           <tooltip heading="Tooltip Heading">Tooltip text<disabledText /></tooltip>
         </button>
       </controls>
